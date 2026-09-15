@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Spam Detector</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{
+            min-height:100vh;font-family:Arial,sans-serif;
+            background:linear-gradient(135deg,#eef2ff,#f8fafc);
+            display:flex;align-items:center;justify-content:center;padding:30px
+        }
+        .container{width:100%;max-width:850px}
+        .header{text-align:center;margin-bottom:24px}
+        .header .icon{font-size:48px;margin-bottom:8px}
+        h1{font-size:38px;color:#111827;margin-bottom:8px}
+        .subtitle{color:#6b7280}
+        .card{
+            background:#fff;padding:34px;border-radius:20px;
+            box-shadow:0 15px 40px rgba(0,0,0,.08)
+        }
+        .group{margin-bottom:20px}
+        label{display:block;font-weight:700;color:#374151;margin-bottom:8px}
+        input,textarea{
+            width:100%;padding:14px 16px;border:1px solid #d1d5db;
+            border-radius:10px;font-size:15px;outline:none
+        }
+        input:focus,textarea:focus{
+            border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)
+        }
+        textarea{min-height:190px;resize:vertical}
+        button{
+            width:100%;padding:15px;border:0;border-radius:10px;
+            background:#4f46e5;color:#fff;font-size:16px;font-weight:700;cursor:pointer
+        }
+        button:hover{background:#4338ca}
+        .error{
+            margin-top:20px;padding:14px;border-radius:10px;
+            background:#fee2e2;color:#b91c1c;text-align:center
+        }
+        .result{
+            margin-top:24px;padding:22px;border-radius:12px;text-align:center
+        }
+        .spam{background:#fee2e2;color:#dc2626}
+        .safe{background:#dcfce7;color:#16a34a}
+        .result h2{font-size:26px;margin-bottom:7px}
+        .result p{color:#4b5563}
+        .footer{text-align:center;margin-top:18px;color:#9ca3af;font-size:13px}
+        @media(max-width:600px){
+            body{padding:15px}.card{padding:22px}h1{font-size:30px}
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="icon">📧</div>
+        <h1>Email Spam Detector</h1>
+        <p class="subtitle">SVM + TF-IDF Machine Learning</p>
+    </div>
+
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="group">
+                <label for="subject">Email Subject</label>
+                <input id="subject" name="subject" type="text"
+                       placeholder="Enter email subject..."
+                       value="{{ subject }}" required>
+            </div>
+
+            <div class="group">
+                <label for="body">Email Body</label>
+                <textarea id="body" name="body"
+                          placeholder="Enter email body..." required>{{ body }}</textarea>
+            </div>
+
+            <button type="submit">Check Email</button>
+        </form>
+
+        {% if error %}
+            <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        {% if prediction is not None %}
+            {% if prediction == 1 %}
+                <div class="result spam">
+                    <h2>⚠️ Spam Email</h2>
+                    <p>This email appears to be suspicious or unwanted.</p>
+                </div>
+            {% else %}
+                <div class="result safe">
+                    <h2>✅ Not Spam</h2>
+                    <p>This email appears to be a normal email.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="footer">Email Classification Project</div>
+</div>
+</body>
+</html>
