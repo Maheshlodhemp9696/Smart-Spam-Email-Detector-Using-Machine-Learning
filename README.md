@@ -168,36 +168,6 @@ The model predicts:
 
 The prediction is displayed to the user through the Django interface.
 
-📂 Project Structure
-
-Smart-Spam-Email-Detector-Using-Machine-Learning/
-│
-├── detector/
-│   ├── templates/
-│   │   └── index.html
-│   │
-│   ├── apps.py
-│   ├── urls.py
-│   ├── views.py
-│   ├── train_model.py
-│   ├── model.pkl
-│   └── tfidf.pkl
-│
-├── email_spam_detector/
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   └── __init__.py
-│
-├── screenshots/
-│   ├── home_page.png
-│   ├── spam.png
-│   └── not_spam.png
-│
-├── manage.py
-├── requirements.txt
-└── README.md
-
 📊 Dataset
 
 The application uses a CSV dataset containing email information and classification labels.
